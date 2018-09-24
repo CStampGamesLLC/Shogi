@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameType {Cpu, Pvp, Online}
+
 public class LevelManager : MonoBehaviour {
 
     #region Singleton
@@ -59,6 +61,22 @@ public class LevelManager : MonoBehaviour {
 	public void LoadLevel(int index) {
 		SceneManager.LoadScene(index);
 	}
+    public void LoadLevelType(int type){
+
+        switch (type){
+            case 0: //cpu
+                onLevelWasLoadedCallback += LoadForPvp;
+                print("ASFAF");
+                LoadForPvp();
+                break;
+            case 1: //pvp
+                onLevelWasLoadedCallback += LoadForCpu;
+                break;
+            case 2: //online
+                break;
+        }
+
+    }
 
     public string GetCurrentLevelName() {
         return SceneManager.GetActiveScene().name;
@@ -75,6 +93,14 @@ public class LevelManager : MonoBehaviour {
 		LoadLevel (myBuildIndex + 1);
 
 	}
+
+    public void LoadForPvp(){
+        Debug.Log("Pvp");
+    }
+
+    public void LoadForCpu(){
+        Debug.Log("Cpu");
+    }
 
 	IEnumerator AutoLoad(){
 
